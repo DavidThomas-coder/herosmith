@@ -1,7 +1,8 @@
 # backend/app.py
 from flask import Flask
-from models.user import db as user_db
-from models.character import db as character_db
+from flask_sqlalchemy import SQLAlchemy
+from models.user import User
+from models.character import Character
 
 app = Flask(__name__)
 
@@ -9,16 +10,15 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://davidthomas@localhost/herosmith_development'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Initialize the databases
-user_db.init_app(app)
-character_db.init_app(app)
+# Initialize the SQLAlchemy instance
+db = SQLAlchemy(app)
 
 # Create tables
 with app.app_context():
-    user_db.create_all()
-    character_db.create_all()
+    db.create_all()
 
 # Rest of your app code...
+
 
 
 
