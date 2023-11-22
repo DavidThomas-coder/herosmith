@@ -5,8 +5,8 @@ from models.character import db as character_db
 
 app = Flask(__name__)
 
-# Configure the database URI, e.g., PostgreSQL
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://username:password@localhost/mydatabase'
+# Replace the following URI with your PostgreSQL database URI
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://davidthomas@localhost/herosmith_development'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize the databases
@@ -19,6 +19,7 @@ with app.app_context():
     character_db.create_all()
 
 # Rest of your app code...
+
 
 
 
