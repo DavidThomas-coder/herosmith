@@ -13,13 +13,12 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Initialize the SQLAlchemy instance
 db = SQLAlchemy(app)
 
-# Create tables
-with app.app_context():
-    db.create_all()
-
 # Root route
 @app.route('/')
 def index():
+    # Create tables
+    with app.app_context():
+        db.create_all()
     return 'Hello, Flask!'
 
 # Rest of your app code...
