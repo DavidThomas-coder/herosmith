@@ -17,9 +17,12 @@ db = SQLAlchemy(app)
 with app.app_context():
     db.create_all()
 
+# Root route
+@app.route('/')
+def index():
+    return 'Hello, Flask!'
+
 # Rest of your app code...
 
-
-
-
-
+if __name__ == '__main__':
+    app.run(debug=True)
