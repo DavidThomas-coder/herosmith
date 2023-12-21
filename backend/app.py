@@ -19,7 +19,7 @@ def index():
     # Create tables
     with app.app_context():
         db.create_all()
-    return 'Hello Flask!''
+    return 'Hello Flask!'
 
 # Rest of your app code...
 
