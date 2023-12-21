@@ -1,5 +1,5 @@
 # backend/app.py
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from models.user import User
 from models.character import Character
@@ -19,7 +19,7 @@ def index():
     # Create tables
     with app.app_context():
         db.create_all()
-    return 'Hello, Flask!'
+    return render_template('index.html')
 
 # Rest of your app code...
 
