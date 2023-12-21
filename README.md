@@ -1,3 +1,5 @@
+--Open in separate tabs!--
+
 To start the backend server --
 
 1.  Go to backend folder
