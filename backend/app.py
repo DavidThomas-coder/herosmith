@@ -1,27 +1,61 @@
 # backend/app.py
-from flask import Flask, render_template
+from flask import Flask, request, jsonify
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_sqlalchemy import SQLAlchemy
 from models.user import User
-from models.character import Character
 
 app = Flask(__name__)
 
 # Replace the following URI with your PostgreSQL database URI
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://davidthomas@localhost/herosmith_development'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = 'your_secret_key'  # Add a secret key for session management
 
 # Initialize the SQLAlchemy instance
 db = SQLAlchemy(app)
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'  # Specify the login view
+
+# Create tables
+with app.app_context():
+    db.create_all()
 
 # Root route
 @app.route('/')
 def index():
-    # Create tables
-    with app.app_context():
-        db.create_all()
     return 'Hello Flask!!'
 
-# Rest of your app code...
+# API endpoint for user registration
+@app.route('/api/register', methods=['POST'])
+def register():
+    data = request.json
+
+    new_user = User(username=data['username'], password=data['password'])
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({'message': 'User registered successfully'})
+
+# API endpoint for user login
+@app.route('/api/login', methods=['POST'])
+def login():
+    data = request.json
+
+    user = User.query.filter_by(username=data['username']).first()
+
+    if user and user.password == data['password']:
+        login_user(user)
+        return jsonify({'message': 'Login successful'})
+
+    return jsonify({'message': 'Invalid username or password'}), 401
+
+# API endpoint for user logout
+@app.route('/api/logout')
+@login_required
+def logout():
+    logout_user()
+    return jsonify({'message': 'Logout successful'})
 
 if __name__ == '__main__':
     app.run(debug=True)
+
