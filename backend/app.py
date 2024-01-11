@@ -1,5 +1,6 @@
 # backend/app.py
 from flask import Flask, render_template, request, jsonify
+from flask_login import login_user, logout_user, login_required, current_user
 from flask_sqlalchemy import SQLAlchemy
 from models.user import User
 from models.character import Character
