@@ -9,7 +9,7 @@ const SignUpForm = () => {
 
   const handleSignUp = async () => {
     try {
-      await axios.post('/api/register', { username, password });
+      await axios.post('http://localhost:5000/api/register', { username, password });
       // Optionally: Redirect to login or provide feedback to the user
     } catch (error) {
       console.error('Error registering user:', error);
