@@ -22,9 +22,12 @@ login_manager.login_view = 'login'  # Specify the login view
 
 # Create tables
 with app.app_context():
-    db.create_all()
-    inspector = db.inspect(db.engine)
-    print("Tables created:", inspector.get_table_names())
+    try:
+        db.create_all()
+        inspector = db.inspect(db.engine)
+        print("Tables created:", inspector.get_table_names())
+    except Exception as e:
+        print("Error creating tables:", str(e))
 
 # Root route
 @app.route('/')
