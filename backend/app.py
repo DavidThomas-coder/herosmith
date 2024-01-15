@@ -3,8 +3,12 @@ from flask import Flask, request, jsonify
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_sqlalchemy import SQLAlchemy
 from models.user import User
+from flask_cors import CORS
 
 app = Flask(__name__)
+
+# Enable CORS for all routes
+CORS(app)
 
 # Replace the following URI with your PostgreSQL database URI
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://davidthomas@localhost/herosmith_development'
