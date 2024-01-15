@@ -39,6 +39,7 @@ def register():
         db.session.commit()
         return jsonify({'message': 'User registered successfully'})
     except Exception as e:
+        print('Error during user registration:', str(e))  # Add this line for detailed server-side logging
         return jsonify({'message': 'Error registering user', 'error': str(e)}), 500
 
 # API endpoint for user login
