@@ -23,12 +23,13 @@ login_manager.login_view = 'login'  # Specify the login view
 # Create tables
 with app.app_context():
     db.create_all()
-    print("Tables created:", db.engine.table_names())
+    inspector = db.inspect(db.engine)
+    print("Tables created:", inspector.get_table_names())
 
 # Root route
 @app.route('/')
 def index():
-    return 'Hello Flask!!'
+    return 'Hello, I am Flask'
 
 # API endpoint for user registration
 @app.route('/api/register', methods=['POST'])
