@@ -2,7 +2,12 @@
 from flask import Flask, request, jsonify
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from models.user import User
+from models.character import Character
+from models.user import db as user_db
+from models.character import db as character_db
+
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -15,8 +20,13 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://davidthomas@localhost/hero
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'your_secret_key'  # Add a secret key for session management
 
-# Initialize the SQLAlchemy instance
+# Print the database URI
+print("Database URI:", app.config['SQLALCHEMY_DATABASE_URI'])
+
+# Initialize the SQLAlchemy instance and run migration
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'  # Specify the login view
 

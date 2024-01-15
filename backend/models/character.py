@@ -14,10 +14,11 @@ class Character(db.Model):
     background = db.Column(db.String(300), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id', name = 'fk_user_id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', name='fk_user_id'))
 
     def __init__(self, race, char_class, name, background):
         self.race = race
         self.char_class = char_class
         self.name = name
         self.background = background
+

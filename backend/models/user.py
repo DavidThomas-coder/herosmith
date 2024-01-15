@@ -23,3 +23,4 @@ class User(UserMixin, db.Model):
 
 
 
+
