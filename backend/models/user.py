@@ -2,8 +2,6 @@
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
-# from backend import db
-
 
 db = SQLAlchemy()
 
@@ -17,6 +15,8 @@ class User(UserMixin, db.Model):
 
     characters = db.relationship('Character', backref='user', lazy=True)
 
-    def __init__(self, username, email):
+    def __init__(self, username, password, email):
         self.username = username
+        self.password = password
         self.email = email
+
