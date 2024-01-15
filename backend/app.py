@@ -32,13 +32,14 @@ def index():
 # API endpoint for user registration
 @app.route('/api/register', methods=['POST'])
 def register():
-    data = request.json
-
-    new_user = User(username=data['username'], password=data['password'])
-    db.session.add(new_user)
-    db.session.commit()
-
-    return jsonify({'message': 'User registered successfully'})
+    try:
+        data = request.json
+        new_user = User(username=data['username'], password=data['password'])
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify({'message': 'User registered successfully'})
+    except Exception as e:
+        return jsonify({'message': 'Error registering user', 'error': str(e)}), 500
 
 # API endpoint for user login
 @app.route('/api/login', methods=['POST'])
