@@ -23,6 +23,7 @@ login_manager.login_view = 'login'  # Specify the login view
 # Create tables
 with app.app_context():
     db.create_all()
+    print("Tables created:", db.engine.table_names())
 
 # Root route
 @app.route('/')
@@ -34,13 +35,14 @@ def index():
 def register():
     try:
         data = request.json
-        new_user = User(username=data['username'], password=data['password'])
+        new_user = User(username=data['username'], password=data['password'], email=data.get('email'))
         db.session.add(new_user)
         db.session.commit()
         return jsonify({'message': 'User registered successfully'})
     except Exception as e:
-        print('Error during user registration:', str(e))  # Add this line for detailed server-side logging
+        print('Error during user registration:', str(e))
         return jsonify({'message': 'Error registering user', 'error': str(e)}), 500
+
 
 # API endpoint for user login
 @app.route('/api/login', methods=['POST'])

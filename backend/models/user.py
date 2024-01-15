@@ -22,3 +22,4 @@ class User(UserMixin, db.Model):
         self.email = email
 
 
+
