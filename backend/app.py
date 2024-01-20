@@ -21,18 +21,14 @@ app.config['SECRET_KEY'] = 'your_secret_key'  # Add a secret key for session man
 # Print the database URI
 print("Database URI:", app.config['SQLALCHEMY_DATABASE_URI'])
 
-# Initialize the SQLAlchemy instance and run migration
+# Initialize the SQLAlchemy instance
 db = SQLAlchemy(app)
+
+# Initialize Flask-Migrate after defining models
 migrate = Migrate(app, db)
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'  # Specify the login view
-
-# Create tables
-with app.app_context():
-    db.create_all()
-    inspector = db.inspect(db.engine)
-    print("Tables created:", inspector.get_table_names())
 
 # Root route
 @app.route('/')
@@ -51,7 +47,6 @@ def register():
     except Exception as e:
         print('Error during user registration:', str(e))
         return jsonify({'message': 'Error registering user', 'error': str(e)}), 500
-
 
 # API endpoint for user login
 @app.route('/api/login', methods=['POST'])

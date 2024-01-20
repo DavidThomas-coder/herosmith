@@ -1,5 +1,6 @@
 import logging
 from logging.config import fileConfig
+import sys  # Import sys
 
 from flask import current_app
 from models.user import User
@@ -48,10 +49,9 @@ target_db = current_app.extensions['migrate'].db
 
 
 def get_metadata():
-    # Ensure that the target_db has a metadata attribute
-    if hasattr(target_db, 'metadata'):
-        return target_db.metadata
-    return None
+    if hasattr(target_db, 'metadatas'):
+        return target_db.metadatas[None]
+    return target_db.metadata
 
 
 def run_migrations_offline():
@@ -68,7 +68,10 @@ def run_migrations_offline():
     """
     url = config.get_main_option("sqlalchemy.url")
     context.configure(
-        url=url, target_metadata=get_metadata(), literal_binds=True
+        url=url,
+        target_metadata=get_metadata(),
+        literal_binds=True,
+        include_schemas=True
     )
 
     with context.begin_transaction():
@@ -103,6 +106,7 @@ def run_migrations_online():
         context.configure(
             connection=connection,
             target_metadata=get_metadata(),
+            include_schemas=True,
             **conf_args
         )
 
