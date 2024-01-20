@@ -48,9 +48,10 @@ target_db = current_app.extensions['migrate'].db
 
 
 def get_metadata():
-    if hasattr(target_db, 'metadatas'):
-        return target_db.metadatas[None]
-    return target_db.metadata
+    # Ensure that the target_db has a metadata attribute
+    if hasattr(target_db, 'metadata'):
+        return target_db.metadata
+    return None
 
 
 def run_migrations_offline():
@@ -113,3 +114,4 @@ if context.is_offline_mode():
     run_migrations_offline()
 else:
     run_migrations_online()
+

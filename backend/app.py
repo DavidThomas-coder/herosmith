@@ -1,12 +1,10 @@
-# backend/app.py
 from flask import Flask, request, jsonify
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+
 from models.user import User
 from models.character import Character
-from models.user import db as user_db
-from models.character import db as character_db
 
 from flask_cors import CORS
 
@@ -32,12 +30,9 @@ login_manager.login_view = 'login'  # Specify the login view
 
 # Create tables
 with app.app_context():
-    try:
-        db.create_all()
-        inspector = db.inspect(db.engine)
-        print("Tables created:", inspector.get_table_names())
-    except Exception as e:
-        print("Error creating tables:", str(e))
+    db.create_all()
+    inspector = db.inspect(db.engine)
+    print("Tables created:", inspector.get_table_names())
 
 # Root route
 @app.route('/')
