@@ -19,7 +19,7 @@ const SignUpForm = () => {
 
   return (
     <div>
-      <h2>Sign Up</h2>
+      <h2>Sign Up For Adventure!</h2>
       <label>
         Username:
         <input
